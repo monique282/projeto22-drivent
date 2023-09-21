@@ -1,12 +1,9 @@
-import { Ticket } from '@prisma/client';
-import dayjs from 'dayjs';
-import { notFoundError } from '@/errors';
+import {TicketType } from '@prisma/client';
+import { ticketRepository } from '@/repositories/tickets-repository';
 
-async function ticketsGet(): Promise<Ticket> {
+async function ticketsGet(): Promise<TicketType[]> {
+    const ticket = await ticketRepository.ticketsGet()
 
-
-    const ticket = await ticketsRepository.ticketsGet();
-  
     return ticket
   }
 

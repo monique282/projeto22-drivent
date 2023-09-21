@@ -27,11 +27,3 @@ export type CEP = {
   cep: string;
 };
 
-export type Tickets = {
-  name: string;
-  price: number;
-  isRemote: Boolean;
-  includesHotel: Boolean;
-  createdAt: Date;
-  updatedAt: Date;
-};
