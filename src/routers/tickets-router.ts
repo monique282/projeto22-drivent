@@ -5,6 +5,8 @@ import { Router } from 'express';
 
 const ticketsRouter = Router();
 
-ticketsRouter.get('/tickets/types', authenticateToken, ticketsGet);
+ticketsRouter
+    .get('/types', authenticateToken, ticketsGet)
+    .get('/', authenticateToken, ticketsGet);
 
 export { ticketsRouter };
