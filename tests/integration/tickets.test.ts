@@ -3,10 +3,11 @@ import { TicketStatus } from '@prisma/client';
 import httpStatus from 'http-status';
 import * as jwt from 'jsonwebtoken';
 import supertest from 'supertest';
-import { createEnrollmentWithAddress, createUser, createTicketType, createTicket } from '../factories';
+import { createEnrollmentWithAddress, createUser, createTicketType, createTicketPost } from '../factories';
 import { cleanDb, generateValidToken } from '../helpers';
 import { prisma } from '@/config';
 import app, { init } from '@/app';
+
 
 beforeAll(async () => {
   await init();
@@ -122,7 +123,7 @@ describe('GET /tickets', () => {
       const token = await generateValidToken(user);
       const enrollment = await createEnrollmentWithAddress(user);
       const ticketType = await createTicketType();
-      const ticket = await createTicket(enrollment.id, ticketType.id, TicketStatus.RESERVED);
+      const ticket = await createTicketPost(enrollment.id, ticketType.id, TicketStatus.RESERVED);
 
       const response = await server.get('/tickets').set('Authorization', `Bearer ${token}`);
 

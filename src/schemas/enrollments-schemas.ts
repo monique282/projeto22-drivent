@@ -1,20 +1,15 @@
 import Joi from 'joi';
 import { getStates, isValidCEP, isValidCPF, isValidMobilePhone } from '@brazilian-utils/brazilian-utils';
-import { CreateOrUpdateEnrollmentWithAddress } from '@/services';
+import { updaCreEnrollmentPost } from '@/services';
 
-const cpfValidationSchema = Joi.string().length(11).custom(joiCpfValidation).required();
 
-const cepValidationSchema = Joi.string().length(9).custom(joiCepValidation).required();
-
-const mobilePhoneValidationSchema = Joi.string().min(14).max(15).custom(joiMobilePhoneValidation).required();
-
-export const createOrUpdateEnrollmentSchema = Joi.object<CreateOrUpdateEnrollmentWithAddress>({
+export const createOrUpdateEnrollmentSchema = Joi.object<updaCreEnrollmentPost>({
   name: Joi.string().min(3).required(),
-  cpf: cpfValidationSchema,
+  cpf: Joi.string().length(11).custom(cpfValidation).required(),
   birthday: Joi.string().isoDate().isoDate().required(),
-  phone: mobilePhoneValidationSchema,
+  phone: Joi.string().min(14).max(15).custom(phoneValidation).required(),
   address: Joi.object({
-    cep: cepValidationSchema,
+    cep: Joi.string().length(9).custom(cepValidation).required(),
     street: Joi.string().required(),
     city: Joi.string().required(),
     number: Joi.string().required(),
@@ -27,7 +22,7 @@ export const createOrUpdateEnrollmentSchema = Joi.object<CreateOrUpdateEnrollmen
   }).required(),
 });
 
-function joiCpfValidation(value: string, helpers: Joi.CustomHelpers<string>) {
+function cpfValidation(value: string, helpers: Joi.CustomHelpers<string>) {
   if (!value) return value;
 
   if (!isValidCPF(value)) {
@@ -37,7 +32,7 @@ function joiCpfValidation(value: string, helpers: Joi.CustomHelpers<string>) {
   return value;
 }
 
-function joiCepValidation(value: string, helpers: Joi.CustomHelpers<string>) {
+function cepValidation(value: string, helpers: Joi.CustomHelpers<string>) {
   if (!value) return value;
 
   if (!isValidCEP(value)) {
@@ -47,7 +42,7 @@ function joiCepValidation(value: string, helpers: Joi.CustomHelpers<string>) {
   return value;
 }
 
-function joiMobilePhoneValidation(value: string, helpers: Joi.CustomHelpers<string>) {
+function phoneValidation(value: string, helpers: Joi.CustomHelpers<string>) {
   if (!value) return value;
 
   if (!isValidMobilePhone(value)) {

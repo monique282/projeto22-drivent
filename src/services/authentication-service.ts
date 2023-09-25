@@ -8,11 +8,11 @@ import { exclude } from '@/utils/prisma-utils';
 async function signIn(params: SignInParams): Promise<SignInResult> {
   const { email, password } = params;
 
-  const user = await getUserOrFail(email);
+  const user = await userValidationGet(email);
 
-  await validatePasswordOrFail(password, user.password);
+  await validatePassword(password, user.password);
 
-  const token = await createSession(user.id);
+  const token = await createSessionPost(user.id);
 
   return {
     user: exclude(user, 'password'),
@@ -20,16 +20,16 @@ async function signIn(params: SignInParams): Promise<SignInResult> {
   };
 }
 
-async function getUserOrFail(email: string): Promise<GetUserOrFailResult> {
+async function userValidationGet(email: string): Promise<UserValidationGetResult> {
   const user = await userRepository.findByEmail(email, { id: true, email: true, password: true });
   if (!user) throw invalidCredentialsError();
 
   return user;
 }
 
-async function createSession(userId: number) {
+async function createSessionPost(userId: number) {
   const token = jwt.sign({ userId }, process.env.JWT_SECRET);
-  await authenticationRepository.createSession({
+  await authenticationRepository.createSessionPost({
     token,
     userId,
   });
@@ -37,9 +37,13 @@ async function createSession(userId: number) {
   return token;
 }
 
-async function validatePasswordOrFail(password: string, userPassword: string) {
+async function validatePassword(password: string, userPassword: string) {
   const isPasswordValid = await bcrypt.compare(password, userPassword);
-  if (!isPasswordValid) throw invalidCredentialsError();
+
+  // se não for valido
+  if (!isPasswordValid) { 
+    throw invalidCredentialsError();
+   }
 }
 
 export type SignInParams = Pick<User, 'email' | 'password'>;
@@ -49,7 +53,7 @@ type SignInResult = {
   token: string;
 };
 
-type GetUserOrFailResult = Pick<User, 'id' | 'email' | 'password'>;
+type UserValidationGetResult = Pick<User, 'id' | 'email' | 'password'>;
 
 export const authenticationService = {
   signIn,

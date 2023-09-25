@@ -4,16 +4,19 @@ import { AuthenticatedRequest } from '@/middlewares';
 import { enrollmentsService } from '@/services';
 import { CEP } from '@/protocols';
 
-export async function getEnrollmentByUser(req: AuthenticatedRequest, res: Response) {
+// essa função seve para pegar todas as inscrições
+export async function enrollmentByUserGet(req: AuthenticatedRequest, res: Response) {
+
+  // pegando o id do usuario pelo req
   const { userId } = req;
 
-  const enrollmentWithAddress = await enrollmentsService.getOneWithAddressByUserId(userId);
-
+  const enrollmentWithAddress = await enrollmentsService.addressAtGet(userId);
   return res.status(httpStatus.OK).send(enrollmentWithAddress);
 }
 
-export async function postCreateOrUpdateEnrollment(req: AuthenticatedRequest, res: Response) {
-  await enrollmentsService.createOrUpdateEnrollmentWithAddress({
+// essa função serve para criar ou atualizar o endereço
+export async function updaCreEnrollmentPost(req: AuthenticatedRequest, res: Response) {
+  await enrollmentsService.updaCreEnrollmentPost({
     ...req.body,
     userId: req.userId,
   });
@@ -21,9 +24,12 @@ export async function postCreateOrUpdateEnrollment(req: AuthenticatedRequest, re
   return res.sendStatus(httpStatus.OK);
 }
 
-export async function getAddressFromCEP(req: AuthenticatedRequest, res: Response) {
+// essa função serve para pegar o endereço pelo cep
+export async function addressCepGet(req: AuthenticatedRequest, res: Response) {
+
+  // pegando o cep enviado pela query que o cliente digitou
   const { cep } = req.query as CEP;
 
-  const address = await enrollmentsService.getAddressFromCEP(cep);
+  const address = await enrollmentsService.addressCepGet(cep);
   res.status(httpStatus.OK).send(address);
 }

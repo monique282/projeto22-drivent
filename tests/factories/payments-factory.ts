@@ -1,7 +1,7 @@
 import faker from '@faker-js/faker';
 import { prisma } from '@/config';
 
-export async function createPayment(ticketId: number, value: number) {
+export async function paymentPost(ticketId: number, value: number) {
   return prisma.payment.create({
     data: {
       ticketId,

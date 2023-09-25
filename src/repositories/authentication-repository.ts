@@ -1,7 +1,7 @@
 import { Prisma } from '@prisma/client';
 import { prisma } from '@/config';
 
-async function createSession(data: Prisma.SessionUncheckedCreateInput) {
+async function createSessionPost(data: Prisma.SessionUncheckedCreateInput) {
   return prisma.session.create({
     data,
   });
@@ -16,6 +16,6 @@ async function findSession(token: string) {
 }
 
 export const authenticationRepository = {
-  createSession,
+  createSessionPost,
   findSession,
 };

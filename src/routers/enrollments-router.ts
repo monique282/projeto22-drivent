@@ -1,14 +1,14 @@
 import { Router } from 'express';
 import { authenticateToken, validateBody } from '@/middlewares';
-import { getEnrollmentByUser, postCreateOrUpdateEnrollment, getAddressFromCEP } from '@/controllers';
+import { enrollmentByUserGet, updaCreEnrollmentPost, addressCepGet } from '@/controllers';
 import { createOrUpdateEnrollmentSchema } from '@/schemas';
 
 const enrollmentsRouter = Router();
 
 enrollmentsRouter
-  .get('/cep', getAddressFromCEP)
+  .get('/cep', addressCepGet)
   .all('/*', authenticateToken)
-  .get('/', getEnrollmentByUser)
-  .post('/', validateBody(createOrUpdateEnrollmentSchema), postCreateOrUpdateEnrollment);
+  .get('/', enrollmentByUserGet)
+  .post('/', validateBody(createOrUpdateEnrollmentSchema), updaCreEnrollmentPost);
 
 export { enrollmentsRouter };

@@ -1,4 +1,4 @@
-export * from './cannot-enroll-before-start-date-error';
+export * from './date-error-at-the-beginning';
 export * from './conflict-error';
 export * from './invalid-data-error';
 export * from './invalid-email-error';

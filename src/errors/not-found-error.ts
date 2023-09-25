@@ -6,3 +6,10 @@ export function notFoundError(): ApplicationError {
     message: 'No result for this search!',
   };
 }
+
+export function notFoundType(message: string): ApplicationError {
+  return {
+    name: 'NotFoundError',
+    message: message,
+  };
+}

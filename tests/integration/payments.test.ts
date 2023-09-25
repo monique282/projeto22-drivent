@@ -7,8 +7,8 @@ import {
   createEnrollmentWithAddress,
   createUser,
   createTicketType,
-  createTicket,
-  createPayment,
+  createTicketPost,
+  paymentPost,
   generateCreditCardData,
 } from '../factories';
 import { cleanDb, generateValidToken } from '../helpers';
@@ -76,7 +76,7 @@ describe('GET /payments', () => {
 
       const otherUser = await createUser();
       const otherUserEnrollment = await createEnrollmentWithAddress(otherUser);
-      const ticket = await createTicket(otherUserEnrollment.id, ticketType.id, TicketStatus.RESERVED);
+      const ticket = await createTicketPost(otherUserEnrollment.id, ticketType.id, TicketStatus.RESERVED);
 
       const response = await server.get(`/payments?ticketId=${ticket.id}`).set('Authorization', `Bearer ${token}`);
 
@@ -88,9 +88,9 @@ describe('GET /payments', () => {
       const token = await generateValidToken(user);
       const enrollment = await createEnrollmentWithAddress(user);
       const ticketType = await createTicketType();
-      const ticket = await createTicket(enrollment.id, ticketType.id, TicketStatus.RESERVED);
+      const ticket = await createTicketPost(enrollment.id, ticketType.id, TicketStatus.RESERVED);
 
-      const payment = await createPayment(ticket.id, ticketType.price);
+      const payment = await paymentPost(ticket.id, ticketType.price);
 
       const response = await server.get(`/payments?ticketId=${ticket.id}`).set('Authorization', `Bearer ${token}`);
 
@@ -138,7 +138,7 @@ describe('POST /payments/process', () => {
       const token = await generateValidToken(user);
       const enrollment = await createEnrollmentWithAddress(user);
       const ticketType = await createTicketType();
-      await createTicket(enrollment.id, ticketType.id, TicketStatus.RESERVED);
+      await createTicketPost(enrollment.id, ticketType.id, TicketStatus.RESERVED);
 
       const body = { cardData: generateCreditCardData() };
 
@@ -152,7 +152,7 @@ describe('POST /payments/process', () => {
       const token = await generateValidToken(user);
       const enrollment = await createEnrollmentWithAddress(user);
       const ticketType = await createTicketType();
-      const ticket = await createTicket(enrollment.id, ticketType.id, TicketStatus.RESERVED);
+      const ticket = await createTicketPost(enrollment.id, ticketType.id, TicketStatus.RESERVED);
 
       const body = { ticketId: ticket };
 
@@ -181,7 +181,7 @@ describe('POST /payments/process', () => {
 
       const otherUser = await createUser();
       const otherUserEnrollment = await createEnrollmentWithAddress(otherUser);
-      const ticket = await createTicket(otherUserEnrollment.id, ticketType.id, TicketStatus.RESERVED);
+      const ticket = await createTicketPost(otherUserEnrollment.id, ticketType.id, TicketStatus.RESERVED);
 
       const body = { ticketId: ticket.id, cardData: generateCreditCardData() };
 
@@ -195,7 +195,7 @@ describe('POST /payments/process', () => {
       const token = await generateValidToken(user);
       const enrollment = await createEnrollmentWithAddress(user);
       const ticketType = await createTicketType();
-      const ticket = await createTicket(enrollment.id, ticketType.id, TicketStatus.RESERVED);
+      const ticket = await createTicketPost(enrollment.id, ticketType.id, TicketStatus.RESERVED);
 
       const body = { ticketId: ticket.id, cardData: generateCreditCardData() };
 
@@ -218,7 +218,7 @@ describe('POST /payments/process', () => {
       const token = await generateValidToken(user);
       const enrollment = await createEnrollmentWithAddress(user);
       const ticketType = await createTicketType();
-      const ticket = await createTicket(enrollment.id, ticketType.id, TicketStatus.RESERVED);
+      const ticket = await createTicketPost(enrollment.id, ticketType.id, TicketStatus.RESERVED);
 
       const beforeCount = await prisma.payment.count();
 
@@ -236,7 +236,7 @@ describe('POST /payments/process', () => {
       const token = await generateValidToken(user);
       const enrollment = await createEnrollmentWithAddress(user);
       const ticketType = await createTicketType();
-      const ticket = await createTicket(enrollment.id, ticketType.id, TicketStatus.RESERVED);
+      const ticket = await createTicketPost(enrollment.id, ticketType.id, TicketStatus.RESERVED);
 
       const body = { ticketId: ticket.id, cardData: generateCreditCardData() };
       await server.post('/payments/process').set('Authorization', `Bearer ${token}`).send(body);

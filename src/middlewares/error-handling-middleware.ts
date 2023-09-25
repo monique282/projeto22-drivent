@@ -8,7 +8,7 @@ export function handleApplicationErrors(
   res: Response,
   next: NextFunction,
 ) {
-  if (err.name === 'CannotEnrollBeforeStartDateError') {
+  if (err.name === 'dateErrorAtTheBeginning') {
     return res.status(httpStatus.BAD_REQUEST).send({
       message: err.message,
     });
@@ -26,7 +26,7 @@ export function handleApplicationErrors(
     });
   }
 
-  if (err.name === 'InvalidDataError') {
+  if (err.name === 'InvalidDataError' || err.name === 'BadRequestError') {
     return res.status(httpStatus.BAD_REQUEST).send({
       message: err.message,
     });

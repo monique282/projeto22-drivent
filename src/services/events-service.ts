@@ -4,19 +4,31 @@ import { notFoundError } from '@/errors';
 import { eventRepository } from '@/repositories';
 import { exclude } from '@/utils/prisma-utils';
 
-async function getFirstEvent(): Promise<GetFirstEventResult> {
+
+async function eventGet(): Promise<EventGet> {
+
+  // validadno se os eventos vem do jeito certo
   const event = await eventRepository.findFirst();
-  if (!event) throw notFoundError();
+
+  // se tiver errado
+  if (!event) {
+    throw notFoundError();
+  }
 
   return exclude(event, 'createdAt', 'updatedAt');
 }
 
-export type GetFirstEventResult = Omit<Event, 'createdAt' | 'updatedAt'>;
+export type EventGet = Omit<Event, 'createdAt' | 'updatedAt'>;
 
-async function isCurrentEventActive(): Promise<boolean> {
+async function validEvent(): Promise<boolean> {
   const event = await eventRepository.findFirst();
-  if (!event) return false;
 
+  // se tiver errado
+  if (!event) {
+    return false;
+  }
+
+  // se não
   const now = dayjs();
   const eventStartsAt = dayjs(event.startsAt);
   const eventEndsAt = dayjs(event.endsAt);
@@ -25,6 +37,6 @@ async function isCurrentEventActive(): Promise<boolean> {
 }
 
 export const eventsService = {
-  getFirstEvent,
-  isCurrentEventActive,
+  eventGet,
+  validEvent,
 };
