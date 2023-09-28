@@ -2,8 +2,8 @@ import { ticketService } from './tickets-service';
 import { PaymentBody } from '@/schemas/payments-schemas';
 import { notFoundType, unauthorizedType } from '@/errors';
 import { ticketsRepository } from '@/repositories/tickets-repository';
-import { paymentRepository } from '@/repositories';
 import { badRequestError } from '@/errors/cep-error';
+import { paymentRepository } from '@/repositories/payment-repository';
 
 export type PaymentResponse = {
   id: number;
