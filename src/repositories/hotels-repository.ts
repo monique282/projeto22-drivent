@@ -1,6 +1,5 @@
-import { Enrollment, Ticket, TicketStatus } from '@prisma/client';
+
 import { prisma } from '@/config';
-import { TicketResp } from '@/services/tickets-service';
 
 export type HotelsResp = {
     id: number,

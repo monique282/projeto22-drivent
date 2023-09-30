@@ -26,7 +26,7 @@ async function createTicketPost(id: TicketTypeID, userId: number): Promise<Ticke
   const tickedTypeId = id.ticketTypeId;
   const enrollment = await enrollmentRepository.findAddressById(userId);
 
-  // verificando se o endereço do usuario é valido
+  // verificando se a inscrição do usuario é valido
   if (!enrollment) {
     throw notFoundType('Enrollment not found');
   }

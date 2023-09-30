@@ -9,7 +9,7 @@ export async function ticketTypesGet(req: AuthenticatedRequest, res: Response) {
   return res.status(httpStatus.OK).send(ticketTypes);
 }
 
-// essa função serve ṕara pegar todos os tickets independente do usuario
+// essa função serve para pegar todos os tickets independente do usuario
 export async function ticketGet(req: AuthenticatedRequest, res: Response) {
   const ticket = await ticketService.ticketGet(req.userId);
   return res.status(httpStatus.OK).send(ticket);
