@@ -6,6 +6,7 @@ import { paymentsRouter } from './routers/payments-router';
 import { handleApplicationErrors } from '@/middlewares';
 import { usersRouter, authenticationRouter, eventsRouter, enrollmentsRouter, ticketsRouter } from '@/routers';
 import { loadEnv, connectDb, disconnectDB } from '@/config';
+import { hotelsRouter } from './routers/hotels-router';
 
 loadEnv();
 
@@ -20,6 +21,7 @@ app
   .use('/enrollments', enrollmentsRouter)
   .use('/tickets', ticketsRouter)
   .use('/payments', paymentsRouter)
+  .use('/hotels', hotelsRouter)
   .use(handleApplicationErrors);
 
 export function init(): Promise<Express> {

@@ -3,10 +3,11 @@ import { TicketStatus } from '@prisma/client';
 import httpStatus from 'http-status';
 import * as jwt from 'jsonwebtoken';
 import supertest from 'supertest';
-import { createEnrollmentWithAddress, createUser, createTicketType, createTicketPost } from '../factories';
+import { createEnrollmentWithAddress, createUser } from '../factories';
 import { cleanDb, generateValidToken } from '../helpers';
 import { prisma } from '@/config';
 import app, { init } from '@/app';
+
 
 beforeAll(async () => {
     await init();
@@ -53,33 +54,33 @@ describe('GET /hotels', () => {
             expect(response.status).toEqual(httpStatus.NOT_FOUND);
         });
 
-        it('deve responder com status 404 quando o usuário ainda não tem um ticket', async () => {
+        it('deve responder com status 404 quando o usuário ainda não tem um hotel', async () => {
             const user = await createUser();
             const token = await generateValidToken(user);
             await createEnrollmentWithAddress(user);
 
-            const response = await server.get('/tickets').set('Authorization', `Bearer ${token}`);
+            const response = await server.get('/hotels').set('Authorization', `Bearer ${token}`);
 
             expect(response.status).toEqual(httpStatus.NOT_FOUND);
         });
 
-        it('deve responder com status 200 e com dados do hotel', async () => {
+        it('deve responder com status 200 e com dados dos hoteis', async () => {
             const user = await createUser();
             const token = await generateValidToken(user);
-            const inscrição = await createEnrollmentWithAddress(user);
-            const ticketType = await createTicketType();
-            const hotel = await createTicketPost(inscrição.id, ticketType.id, TicketStatus.RESERVED);
+            const hotels = await server.get('/hotels').set('Authorization', `Bearer ${token}`);
 
-            const response = await server.get('/hotels').set('Authorization', `Bearer ${token}`);
-
-            expect(response.status).toEqual(httpStatus.OK);
-            expect(response.body).toEqual({
-                id: hotel.id,
-                name: hotel.name,
-                image: hotel.image,
-                createdAt: hotel.createdAt.toISOString(),
-                updatedAt: hotel.updatedAt.toISOString(),
-            });
+            expect(hotels.status).toEqual(httpStatus.OK);
+            expect(hotels.body).toEqual(
+                expect.arrayContaining([
+                    expect.objectContaining({
+                        id: expect.any(Number),
+                        name: expect.any(String),
+                        image: expect.any(String),
+                        createdAt: expect.any(Date),
+                        updatedAt: expect.any(Date),
+                    })
+                ])
+            );
         });
     });
 });
