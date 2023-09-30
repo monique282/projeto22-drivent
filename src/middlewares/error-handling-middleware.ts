@@ -64,8 +64,12 @@ export function handleApplicationErrors(
     });
   }
 
-  /* eslint-disable-next-line no-console */
-  console.error(err);
+  if (err.name === 'PaymentError') {
+    return res.status(httpStatus.PAYMENT_REQUIRED).send({
+      message: err.message,
+    });
+  } 
+
   res.status(httpStatus.INTERNAL_SERVER_ERROR).send({
     error: 'InternalServerError',
     message: 'Internal Server Error',
