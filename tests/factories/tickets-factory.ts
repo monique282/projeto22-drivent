@@ -34,3 +34,4 @@ export async function ticketPost(remote: boolean, includesHotel: boolean) {
     },
   });
 }
+

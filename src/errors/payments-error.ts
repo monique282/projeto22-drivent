@@ -1,8 +1,9 @@
 import { ApplicationError } from '@/protocols';
 
+// erro 402
 export function paymentError(message: string): ApplicationError {
   return {
-    name: 'paymentError',
+    name: 'PaymentError',
     message,
   };
 }

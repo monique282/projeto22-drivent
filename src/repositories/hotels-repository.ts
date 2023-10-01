@@ -1,23 +1,16 @@
 
 import { prisma } from '@/config';
-
-export type HotelsResp = {
-    id: number,
-    name: string,
-    image: string,
-    createdAt: Date,
-    updatedAt: Date,
-};
+import { Hotel } from '@prisma/client';
 
 
 // pegando todos os hoteis
-async function hotelsGet(): Promise<HotelsResp[]| null> {
+async function hotelsGet(): Promise<Hotel[]> {
 
   const hotels = await prisma.hotel.findMany();
-  return hotels as HotelsResp[];
+  return hotels;
 }
 
-// pegando os quartos do hotel usando o if
+// pegando os quartos do hotel usando o id
 async function hotelRoomsGet(hotelId: number) {
     const hotels = await prisma.hotel.findFirst({
       where: {
