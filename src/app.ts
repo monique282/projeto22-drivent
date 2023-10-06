@@ -4,7 +4,8 @@ import express, { Express } from 'express';
 import cors from 'cors';
 import { paymentsRouter } from './routers/payments-router';
 import { handleApplicationErrors } from '@/middlewares';
-import { usersRouter, authenticationRouter, eventsRouter, enrollmentsRouter, ticketsRouter } from '@/routers';
+import { usersRouter, authenticationRouter, eventsRouter, enrollmentsRouter, ticketsRouter   hotelsRouter,
+} from '@/routers';
 import { loadEnv, connectDb, disconnectDB } from '@/config';
 import { hotelsRouter } from './routers/hotels-router';
 
