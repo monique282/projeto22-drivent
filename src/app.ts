@@ -4,10 +4,11 @@ import express, { Express } from 'express';
 import cors from 'cors';
 import { paymentsRouter } from './routers/payments-router';
 import { handleApplicationErrors } from '@/middlewares';
-import { usersRouter, authenticationRouter, eventsRouter, enrollmentsRouter, ticketsRouter   hotelsRouter,
+import { usersRouter, authenticationRouter, eventsRouter, enrollmentsRouter, ticketsRouter, hotelsRouter,
 } from '@/routers';
 import { loadEnv, connectDb, disconnectDB } from '@/config';
-import { hotelsRouter } from './routers/hotels-router';
+import { bookingRouter } from './routers/booking-router';
+
 
 loadEnv();
 
@@ -23,6 +24,7 @@ app
   .use('/tickets', ticketsRouter)
   .use('/payments', paymentsRouter)
   .use('/hotels', hotelsRouter)
+  .use('/booking', bookingRouter)
   .use(handleApplicationErrors);
 
 export function init(): Promise<Express> {

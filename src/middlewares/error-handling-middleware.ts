@@ -85,6 +85,13 @@ export function handleApplicationErrors(
     });
   }
 
+  // erro 403
+  if (err.name === 'ForbiddenError') {
+    return res.status(httpStatus.FORBIDDEN).send({
+      message: err.message,
+    });
+  }
+
   //erro 500
   res.status(httpStatus.INTERNAL_SERVER_ERROR).send({
     error: 'InternalServerError',

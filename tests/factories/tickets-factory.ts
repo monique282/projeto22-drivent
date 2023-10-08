@@ -2,6 +2,7 @@ import faker from '@faker-js/faker';
 import { TicketStatus } from '@prisma/client';
 import { prisma } from '@/config';
 
+//createTicketType
 export async function createTicketType(isRemote?: boolean, includesHotel?: boolean) {
   return prisma.ticketType.create({
     data: {
@@ -13,17 +14,7 @@ export async function createTicketType(isRemote?: boolean, includesHotel?: boole
   });
 }
 
-export async function createTicketPost(enrollmentId: number, ticketTypeId: number, status: TicketStatus) {
-  return prisma.ticket.create({
-    data: {
-      enrollmentId,
-      ticketTypeId,
-      status,
-    },
-  });
-}
-
-
+//ticketPost createTicketTypeWithParams
 export async function ticketPost(remote: boolean, includesHotel: boolean) {
   return prisma.ticketType.create({
     data: {
@@ -34,4 +25,17 @@ export async function ticketPost(remote: boolean, includesHotel: boolean) {
     },
   });
 }
+
+
+//createTicketPost
+export async function createTicketPost(enrollmentId: number, ticketTypeId: number, status: TicketStatus) {
+  return prisma.ticket.create({
+    data: {
+      enrollmentId,
+      ticketTypeId,
+      status,
+    },
+  });
+}
+
 
