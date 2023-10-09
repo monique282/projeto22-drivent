@@ -8,18 +8,18 @@ import { bookingRepository } from '@/repositories/booking-repository';
 async function bookingUserGet(userId: number) {
 
     // buscando a reserva do usuario pelo id
-    const result = await bookingRepository.userGet(userId);
+    const booking = await bookingRepository.userGet(userId);
 
     // se não vier nada
-    if (!result) {
+    if (!booking) {
         throw notFoundType('Reserva não encontrada, não existe hoteis para você')
     };
 
-    delete result.userId;
-    delete result.createdAt;
-    delete result.updatedAt;
-    delete result.roomId;
-    return result;
+    delete booking.userId;
+    delete booking.createdAt;
+    delete booking.updatedAt;
+    delete booking.roomId;
+    return booking;
 };
 
 
@@ -53,7 +53,7 @@ async function bookingPost(roomId: number, userId: number) {
 
     //  verificando se é valido
     if (!ticket) {
-        throw forbiddenError('Enrollment not found');
+        throw forbiddenError('Ticket not found');
     };
 
     // verificando se foi encontrado
@@ -98,7 +98,7 @@ async function bookingUpdate(roomId: number, bookingId: number | string | undefi
 
     // se ele não existe
     if (!room) {
-        throw notFoundType('Room not found');
+        throw notFoundType('Quarto não encontrado');
     };
 
     // pegando a reserva pelo id do usuario
