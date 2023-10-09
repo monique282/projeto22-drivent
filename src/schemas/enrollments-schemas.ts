@@ -2,7 +2,6 @@ import Joi from 'joi';
 import { getStates, isValidCEP, isValidCPF, isValidMobilePhone } from '@brazilian-utils/brazilian-utils';
 import { updaCreEnrollmentPost } from '@/services';
 
-
 export const createOrUpdateEnrollmentSchema = Joi.object<updaCreEnrollmentPost>({
   name: Joi.string().min(3).required(),
   cpf: Joi.string().length(11).custom(cpfValidation).required(),

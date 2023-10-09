@@ -41,9 +41,9 @@ async function validatePassword(password: string, userPassword: string) {
   const isPasswordValid = await bcrypt.compare(password, userPassword);
 
   // se não for valido
-  if (!isPasswordValid) { 
+  if (!isPasswordValid) {
     throw invalidCredentialsError();
-   }
+  }
 }
 
 export type SignInParams = Pick<User, 'email' | 'password'>;

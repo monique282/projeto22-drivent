@@ -26,7 +26,6 @@ export async function ticketPost(remote: boolean, includesHotel: boolean) {
   });
 }
 
-
 //createTicketPost
 export async function createTicketPost(enrollmentId: number, ticketTypeId: number, status: TicketStatus) {
   return prisma.ticket.create({
@@ -37,5 +36,3 @@ export async function createTicketPost(enrollmentId: number, ticketTypeId: numbe
     },
   });
 }
-
-

@@ -1,8 +1,6 @@
 import faker from '@faker-js/faker';
 import { prisma } from '@/config';
 
-
-
 export async function hotelPost(includeRooms: boolean) {
   return prisma.hotel.create({
     data: {

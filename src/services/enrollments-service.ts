@@ -20,11 +20,10 @@ interface Adress {
 }
 
 async function addressCepGet(cep: string) {
-
   // verificando se o cep é valido
   if (!cep || cep === '') {
     throw cepRequestError();
-  };
+  }
 
   const result = (await request.get(`${process.env.VIA_CEP_API}/${cep}/json/`)).data as Adress;
 
@@ -39,7 +38,7 @@ async function addressCepGet(cep: string) {
   // se der erro
   if (result.erro) {
     throw cepRequestError();
-  };
+  }
 
   return FilteredAdress;
 }
@@ -49,7 +48,7 @@ async function addressAtGet(userId: number): Promise<GetOneWithAddressByUserIdRe
   // verificando se a resposta vinda do servidor é valida
   if (!enrollmentResp) {
     throw invalidDataError('Invalid data');
-  };
+  }
 
   const [firstAddress] = enrollmentResp.Address;
   const address = tirstAddressGet(firstAddress);
@@ -63,7 +62,6 @@ async function addressAtGet(userId: number): Promise<GetOneWithAddressByUserIdRe
 type GetOneWithAddressByUserIdResult = Omit<Enrollment, 'userId' | 'createdAt' | 'updatedAt'>;
 
 function tirstAddressGet(firstAddress: Address): GetAddressResult {
-
   // é  valido
   if (!firstAddress) {
     return null;

@@ -6,7 +6,6 @@ import { CEP } from '@/protocols';
 
 // essa função seve para pegar todas as inscrições
 export async function enrollmentByUserGet(req: AuthenticatedRequest, res: Response) {
-
   // pegando o id do usuario pelo req
   const { userId } = req;
 
@@ -26,7 +25,6 @@ export async function updaCreEnrollmentPost(req: AuthenticatedRequest, res: Resp
 
 // essa função serve para pegar o endereço pelo cep
 export async function addressCepGet(req: AuthenticatedRequest, res: Response) {
-
   // pegando o cep enviado pela query que o cliente digitou
   const { cep } = req.query as CEP;
 

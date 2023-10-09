@@ -45,9 +45,9 @@ async function ticketGet(ownerId: number): Promise<TicketResp | null> {
   const ticket = await ticketsRepository.ticketGet(ownerId);
 
   // verificando se a lista de tickets que veio pelo banco é valida
-  if (!ticket) { 
-    throw notFoundType('Ticket not found'); 
-  };
+  if (!ticket) {
+    throw notFoundType('Ticket not found');
+  }
 
   // se der tudo certo
   return ticket;

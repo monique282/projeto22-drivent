@@ -8,7 +8,6 @@ export function handleApplicationErrors(
   res: Response,
   next: NextFunction,
 ) {
-
   // erro 400
   if (err.name === 'dateErrorAtTheBeginning') {
     return res.status(httpStatus.BAD_REQUEST).send({

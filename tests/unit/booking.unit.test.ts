@@ -4,10 +4,8 @@ import { ticketsRepository } from '@/repositories/tickets-repository';
 import { bookingService } from '@/services/booking-service';
 
 describe('GET /booking', () => {
-
   //Retornar uma reserva se existe para o usuario
   it('Return a reservation if it exists for the user', async () => {
-
     // pegandoa as informações da reserva usando o id do usuario
     const bookingResult = { Booking: { id: 1, Room: {} } };
     jest.spyOn(bookingRepository, 'userGet').mockImplementationOnce((): any => {
@@ -19,7 +17,6 @@ describe('GET /booking', () => {
 
   //Retornar quando não existe reserva para o usuário
   it('Return when there is no reservation for the user', async () => {
-    
     jest.spyOn(bookingRepository, 'userGet').mockImplementationOnce((): any => {
       return null;
     });
@@ -33,10 +30,8 @@ describe('GET /booking', () => {
 });
 
 describe('POST /booking', () => {
-
   //Retornar se p quarto não existe
   it('Return if room does not exist', async () => {
-
     jest.spyOn(bookingRepository, 'roomIdGet').mockImplementationOnce((): any => {
       return null;
     });
@@ -49,7 +44,6 @@ describe('POST /booking', () => {
 
   //Retornar quando o quarto ja ta em sua capacidade maxima
   it('Return when the room is at maximum capacity', async () => {
-
     jest.spyOn(bookingRepository, 'roomIdGet').mockImplementationOnce((): any => {
       return {
         capacity: 1,
@@ -65,7 +59,6 @@ describe('POST /booking', () => {
 
   //Retoranar se não existe escrição para determinado usuario
   it('Return if there is no writing for a given user', async () => {
-
     jest.spyOn(bookingRepository, 'roomIdGet').mockImplementationOnce((): any => {
       return {
         capacity: 10,
@@ -84,7 +77,6 @@ describe('POST /booking', () => {
 
   //Retornar, usuario sem ticket
   it('Return, user without ticket', async () => {
-
     jest.spyOn(enrollmentRepository, 'findAddressById').mockImplementationOnce((): any => {
       return { id: 0 };
     });
@@ -106,7 +98,6 @@ describe('POST /booking', () => {
 
   //Retornar, usuario não pagou
   it('Return, user did not pay', async () => {
-
     jest.spyOn(enrollmentRepository, 'findAddressById').mockImplementationOnce((): any => {
       return { id: 0 };
     });
@@ -128,7 +119,6 @@ describe('POST /booking', () => {
 
   //Retornar, ticket sem hotel
   it('Return, ticket without hotell', async () => {
-
     jest.spyOn(enrollmentRepository, 'findAddressById').mockImplementationOnce((): any => {
       return { id: 0 };
     });
@@ -157,7 +147,6 @@ describe('POST /booking', () => {
 
   //Retornar, ticket remoto
   it('Return, remote ticket', async () => {
-
     jest.spyOn(enrollmentRepository, 'findAddressById').mockImplementationOnce((): any => {
       return { id: 0 };
     });
@@ -186,7 +175,6 @@ describe('POST /booking', () => {
 
   //Retornar os dados da reserva apor a criação de uma
   it('Return reservation data after creating a reservation', async () => {
-
     jest.spyOn(enrollmentRepository, 'findAddressById').mockImplementationOnce((): any => {
       return { id: 0 };
     });
@@ -216,10 +204,8 @@ describe('POST /booking', () => {
 });
 
 describe('PUT /booking', () => {
-
   //Retoranr, quarto não existe
   it('Retoranr, room does not exist', async () => {
-
     jest.spyOn(ticketsRepository, 'ticketGet').mockImplementationOnce((): any => {
       return { status: 'PAID', TicketType: { includesHotel: true, isRemote: false } };
     });
@@ -242,7 +228,6 @@ describe('PUT /booking', () => {
 
   //Retornar, quarto sem espaço
   it('Return, room no space', async () => {
-
     jest.spyOn(ticketsRepository, 'ticketGet').mockImplementationOnce((): any => {
       return { status: 'PAID', TicketType: { includesHotel: true, isRemote: false } };
     });
@@ -271,7 +256,6 @@ describe('PUT /booking', () => {
 
   //Retornar, não existe reserva
   it('Return, there is no booking', async () => {
-
     jest.spyOn(ticketsRepository, 'ticketGet').mockImplementationOnce((): any => {
       return { status: 'PAID', TicketType: { includesHotel: true, isRemote: false } };
     });
@@ -298,7 +282,6 @@ describe('PUT /booking', () => {
 
   //Retornar os dados da reserva apos uma atualização
   it('Return reservation data after an update', async () => {
-
     jest.spyOn(ticketsRepository, 'ticketGet').mockImplementationOnce((): any => {
       return { status: 'PAID', TicketType: { includesHotel: true, isRemote: false } };
     });

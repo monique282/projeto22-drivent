@@ -3,12 +3,17 @@ import 'express-async-errors';
 import express, { Express } from 'express';
 import cors from 'cors';
 import { paymentsRouter } from './routers/payments-router';
+import { bookingRouter } from './routers/booking-router';
 import { handleApplicationErrors } from '@/middlewares';
-import { usersRouter, authenticationRouter, eventsRouter, enrollmentsRouter, ticketsRouter, hotelsRouter,
+import {
+  usersRouter,
+  authenticationRouter,
+  eventsRouter,
+  enrollmentsRouter,
+  ticketsRouter,
+  hotelsRouter,
 } from '@/routers';
 import { loadEnv, connectDb, disconnectDB } from '@/config';
-import { bookingRouter } from './routers/booking-router';
-
 
 loadEnv();
 

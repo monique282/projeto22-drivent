@@ -95,7 +95,7 @@ async function create(ticketId: number, enrollmentId: number): Promise<TicketRes
   };
 
   return result;
-};
+}
 
 // função para validar e existencia do ticket
 async function ticketExistsGet(ticketId: number): Promise<boolean> {

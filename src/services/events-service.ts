@@ -4,9 +4,7 @@ import { notFoundError } from '@/errors';
 import { eventRepository } from '@/repositories';
 import { exclude } from '@/utils/prisma-utils';
 
-
 async function eventGet(): Promise<EventGet> {
-
   // validadno se os eventos vem do jeito certo
   const event = await eventRepository.findFirst();
 
